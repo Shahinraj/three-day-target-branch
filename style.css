@@ -1,0 +1,72 @@
+
+#tdt-container {
+    border: 2px solid #ccc;
+    padding: 20px;
+    width: 350px;
+    text-align: center;
+    margin: auto;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+}
+.rank {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #aaa;
+    font-size: 16px;
+}
+.highlight {
+    background-color: lightgreen;
+    font-weight: bold;
+}
+#yesBtn, #resetBtn {
+    font-size: 18px;
+    padding: 10px 25px;
+    margin: 10px;
+    cursor: pointer;
+}
+.message {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #155724;
+    background-color: #d4edda;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+}
+.badge-container {
+    margin-bottom: 10px;
+}
+.badge {
+    font-size: 30px;
+    color: gray;
+    opacity: 0.3;
+}
+.badge.active {
+    color: gold;
+    opacity: 1;
+}
+#BAD.highlight,
+.rank.highlight#BAD {
+    background-color: #fa5252 !important;
+    color: #fff !important;
+}
+.tdt-header {
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+.tdt-inline-info {
+    font-size: 15px;
+    margin-bottom: 6px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+}
+.tdt-inline-info span {
+    margin-right: 8px;
+}
+#today-point {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
