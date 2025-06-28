@@ -2,7 +2,7 @@
 /*
 Plugin Name: Three Day Target
 Description: বাংলা UI, ব্যাজ সিস্টেম, রিপোর্ট পেজ সহ একটি WordPress প্লাগইন
-Version: 3.0
+Version: 4.2
 Author: আপনার নাম
 */
 
@@ -13,7 +13,7 @@ include_once plugin_dir_path(__FILE__) . 'includes/enqueue-assets.php';
 include_once plugin_dir_path(__FILE__) . 'includes/shortcode-display.php';
 include_once plugin_dir_path(__FILE__) . 'includes/ajax-handlers.php';
 include_once plugin_dir_path(__FILE__) . 'includes/report-page.php';
-//include_once plugin_dir_path(__FILE__) . 'includes/tdt-rank-custom-form.php';
+include_once plugin_dir_path(__FILE__) . 'includes/tdt-inline-rank-ajax.php';
 
 
 add_action('admin_menu', 'tdt_add_admin_menu');

@@ -8,37 +8,64 @@ function tdt_display_tracker() {
     $timestamp = current_time('timestamp');
     $today = date('Y-m-d', $timestamp);
     $table = $wpdb->prefix . 'three_day_target';
-    $score_today = $wpdb->get_var($wpdb->prepare("SELECT target_value FROM $table WHERE user_id=%d AND target_date=%s", $user_id, $today)) ?: 0;
+
+    $score_today = $wpdb->get_var($wpdb->prepare(
+        "SELECT target_value FROM $table WHERE user_id=%d AND target_date=%s",
+        $user_id,
+        $today
+    )) ?: 0;
 
     $best_days = 0;
     for ($i = 0; $i < 3; $i++) {
         $day = date('Y-m-d', strtotime("-$i days", $timestamp));
-        $score = $wpdb->get_var($wpdb->prepare("SELECT target_value FROM $table WHERE user_id=%d AND target_date=%s", $user_id, $day));
+        $score = $wpdb->get_var($wpdb->prepare(
+            "SELECT target_value FROM $table WHERE user_id=%d AND target_date=%s",
+            $user_id,
+            $day
+        ));
         if ($score >= 15) $best_days++;
     }
+
+    // র‍্যাংক টেক্সটগুলো ইউজার কাস্টমাইজ করলে সেটি নেবে, না হলে ডিফল্ট
+    $ranks = [
+        'bad' => get_user_meta($user_id, 'tdt_rank_bad', true) ?: 'BAD',
+        'good' => get_user_meta($user_id, 'tdt_rank_good', true) ?: 'GOOD',
+        'better' => get_user_meta($user_id, 'tdt_rank_better', true) ?: 'BETTER',
+        'best' => get_user_meta($user_id, 'tdt_rank_best', true) ?: 'BEST',
+    ];
 
     ob_start(); ?>
     <div id="tdt-container" data-score="<?= esc_attr($score_today); ?>" data-best-days="<?= esc_attr($best_days); ?>">
         <h3 class="tdt-header">3 Day Target</h3>
-       <div class="tdt-inline-info">
-    <span id="today-date">
-        আজকের তারিখ: <?php echo date_i18n('d M', $timestamp); ?>
-    </span><span id="current-time"></span>
-    </div>
 
-		<div id="today-point"></div>
-		 <div class="badge-container"><div class="badge">★</div></div>
-        <div id="ranks">
-            <div id="BEST" class="rank">BEST</div>
-            <div id="BETTER" class="rank">BETTER</div>
-            <div id="GOOD" class="rank">GOOD</div>
-			<div id="BAD" class="rank">BAD</div>
+        <div class="tdt-inline-info">
+            <span id="today-date">আজকের তারিখ: <?php echo date_i18n('d M Y', $timestamp); ?> </span>
+            <span id="current-time"></span>
         </div>
+
+        <div id="today-point"></div>
+
+        <div class="badge-container">
+            <div class="badge">★</div>
+        </div>
+
+        <div id="ranks">
+            <button id="BEST" class="editable-rank"><?php echo esc_html($ranks['best']); ?></button>
+            <button id="BETTER" class="editable-rank"><?php echo esc_html($ranks['better']); ?></button>
+            <button id="GOOD" class="editable-rank"><?php echo esc_html($ranks['good']); ?></button>
+            <button id="BAD" class="editable-rank"><?php echo esc_html($ranks['bad']); ?></button>
+        </div>
+
         <div id="congratsMessage"></div>
-        <button id="yesBtn">Yes</button>
-        <button id="resetBtn">Reset</button>
-		<p>আপনার জন্য বরাদ্দকৃত ১টি কাজ সম্পন্ন হলে Yes ক্লিক করুন।</p>
+
+        <div class="tdt-buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+
+        <p>আপনার জন্য বরাদ্দকৃত ১টি কাজ সম্পন্ন হলে Yes ক্লিক করুন।</p>
     </div>
-    <?php return ob_get_clean();
+    <?php
+    return ob_get_clean();
 }
 add_shortcode('three_day_target', 'tdt_display_tracker');
